@@ -17,7 +17,8 @@ var searchBtnE2 = document.querySelector('#searchBtn-2');
 //             return json.response();
 //         })
 
-//         .then(requestedUrl) {
+//         .then(function(data)) {
+//              console.log(data);
 
 //         }
 //     }
@@ -52,7 +53,7 @@ genreSearch();
 
 // basic click event for the year search 
 
-function yearSearch() {
+function authorBio() {
 
     searchBtnE2.addEventListener('click', function () {
 
@@ -68,7 +69,7 @@ function yearSearch() {
     });
 }
 
-yearSearch();
+authorBio();
 
 
 
