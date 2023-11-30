@@ -1,10 +1,11 @@
-var genreEl = document.querySelector('#year');
+var yearEl = document.querySelector('#year');
 var yearSearchEl = document.querySelector('#yearSearch');
 var yearSearchEl = document.querySelector('#authorSearch')
 var yearEl = document.querySelector('#author-bio');
-var resutlsEl = document.querySelector('#results');
-var searchBtnEl = document.querySelector('#searchBtn-1');
-var searchBtnE2 = document.querySelector('#searchBtn-2');
+var resultsEl = document.querySelector('#results');
+var resultListEl = document.querySelector('#yearResults');
+var searchBtnEl1 = document.querySelector('#searchBtn-1');
+var searchBtnEl2 = document.querySelector('#searchBtn-2');
 
 
 
@@ -15,9 +16,9 @@ var searchBtnE2 = document.querySelector('#searchBtn-2');
 
 
 
-function getData(year) {
+function getData (year) {
 
-   var apiUrl = 'https://www.loc.gov/search/?q=books&fo=json&dates=${year}'
+   var apiUrl = 'https://www.loc.gov/search/?q=books&' + year + '&fo=json' 
 
     fetch(apiUrl) 
     .then(response => {
@@ -26,116 +27,23 @@ function getData(year) {
       .then(data => {
         console.log(data);
 
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.search.length; i++) {
 
-            resutlsEl.textContent = data[i].results;
-        }    
+            var yearList = document.createElement('li'); 
+
+            resultListEl.textContent = data.search[i];
+            resultListEl.appendChild(yearList); 
+             
+        }  
 
             
         });
-    }
-     
-    
-searchBtnEl.addEventListener('click', function() {
-    var year = genreSearchEl.value;
-    getData(year);
-}); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// loop over the data and create a list of books by author
-
-// for (var i = 0; i < data.length; i++) {
-
-//     var bookList = document.createElement('td'); 
-//     var bookRow = document.createElement('tr'); 
-
-
-//     resutlsEl.appendChild(bookList); 
-//     bookList.appendChild(bookRow);
-
-// }
-
-
-
-
-    
-
-
-
-
-
-
-
-//basic click event for the genre search 
-
-// function genreSearch() {
-
-
-//     searchBtnEl.addEventListener('click', function () {
-
-//         const bookGenre = genreSearchEl.value;
-
-//         if (bookGenre !== '') {
-//             console.log(bookGenre);
-
-//         } else {
-//             return;
-//         }
-
-//     });
-
-
-// }
-
-
-// genreSearch();
-
-
-// // basic click event for the year search 
-
-// function authorBio() {
-
-//     searchBtnE2.addEventListener('click', function () {
-
-//         const authBio = yearSearchEl.value;
-
-//         if (authBio !== '') {
-//             console.log(authBio);
-
-//         } else {
-//             return;
-//         }
-
-//     });
-// }
-
-// authorBio();
-
-
-
-
-
-
-
-
-
-
-
-
+    }; 
+
+    searchBtnEl1.addEventListener('click', function() {
+        var year = yearSearchEl.value;
+        getData(year);
+    });
 
 
 
