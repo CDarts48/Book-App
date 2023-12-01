@@ -1,85 +1,120 @@
-var yearEl = document.querySelector('#year');
-var yearSearchEl = document.querySelector('#yearSearch');
-var yearSearchEl = document.querySelector('#authorSearch')
-var yearEl = document.querySelector('#author-bio');
-var resultsEl = document.querySelector('#results');
-var resultListEl = document.querySelector('#yearResults');
-var searchBtnEl1 = document.querySelector('#searchBtn-1');
-var searchBtnEl2 = document.querySelector('#searchBtn-2');
+var genreEl = document.querySelector("#genre");
+var genreSearchEl = document.querySelector("#genreSearch");
+var yearSearchEl = document.querySelector("#authorSearch");
+var yearEl = document.querySelector("#author-bio");
+var resutlsEl = document.querySelector("#results");
+var searchBtnEl = document.querySelector("#searchBtn-1");
+var searchBtnE2 = document.querySelector("#searchBtn-2");
+// var for the google book embedded viewer
 
+// starting the API call function
 
+// function getApi () {
 
+//   var requestedUrl = " ";
 
+//     fetch(requestedUrl) {
+//         .then(function(response) {
+//             return json.response();
+//         })
 
+//         .then(function(data)) {
+//              console.log(data);
 
-// starting the API call fuction 
+//         }
 
+// loop over the data and create a list of books by author
 
+// for (var i = 0; i < data.length; i++) {
 
-function getData (year) {
+//     var bookList = document.createElement('td');
+//     var bookRow = document.createElement('tr');
 
-   var apiUrl = 'https://www.loc.gov/search/?q=books&' + year + '&fo=json' 
+//     resutlsEl.appendChild(bookList);
+//     bookList.appendChild(bookRow);
 
-    fetch(apiUrl) 
-    .then(response => {
-        return response.json();
-        })
-      .then(data => {
-        console.log(data);
+// }
 
-        for (var i = 0; i < data.search.length; i++) {
+// getApi();
 
-            var yearList = document.createElement('li'); 
+//     }
 
-            resultListEl.textContent = data.search[i];
-            resultListEl.appendChild(yearList); 
-             
-        }  
+// }
 
-            
-        });
-    }; 
+// basic click event for the genre search
 
-    searchBtnEl1.addEventListener('click', function() {
-        var year = yearSearchEl.value;
-        getData(year);
+function genreSearch() {
+  searchBtnEl.addEventListener("click", function () {
+    const bookGenre = genreSearchEl.value;
+
+    if (bookGenre !== "") {
+      console.log(bookGenre);
+    } else {
+      return;
+    }
+  });
+}
+
+genreSearch();
+
+// basic click event for the year search
+
+function authorBio() {
+  searchBtnE2.addEventListener("click", function () {
+    const authBio = yearSearchEl.value;
+
+    if (authBio !== "") {
+      console.log(authBio);
+    } else {
+      return;
+    }
+  });
+}
+
+authorBio();
+
+function start() {
+  // fetch("https://www.googleapis.com/books/v1/volumes?q=huckleberry+finn+intitle") depends on whats on the back side of the +
+  fetch("https://www.googleapis.com/books/v1/volumes/R5FhzgEACAAJ")
+    // the R5FhzgEACAAJ was taken from the google books
+
+    // need to get isbn from localstorage/LOC  fetch('https://www.googleapis.com/books/v1/volumes/?q=isbn${isbn}');
+    .then(function (response) {
+      console.log(response);
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data.volumeInfo.description);
+    })
+
+    .catch(function (error) {
+      console.log("Error: " + error.message);
     });
+}
 
-
-
-// const apiKey = "AIzaSyAg_vIE7Oue7sQBYZR4tScNEwAtvAJdFNg";
-// console.log(apiKey);
-
-// Google Books API call
-// sintax for the api call note saves app size
-// Option 2: Use gapi.client.request
-// A more general way to make requests is to use gapi.client.request. Your application does not have to load the Discovery Document as in the first option, but it must still set the API key (and auth for some APIs). While you need to manually fill in REST parameters with this option, it saves one network request and reduces application size.
-
-// <script src="https://apis.google.com/js/api.js"></script>
-// <script>
-// function start() {
-//   // 2. Initialize the JavaScript client library.
-//   gapi.client.init({
-//     'apiKey': 'YOUR_API_KEY',
-//     // clientId and scope are optional if auth is not required.
-//     'clientId': 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
-//     'scope': 'profile',
-//   }).then(function() {
-//     // 3. Initialize and make the API request.
-//     return gapi.client.request({
-//       'path': 'https://people.googleapis.com/v1/people/me?requestMask.includeField=person.names',
-//     })
-//   }).then(function(response) {
-//     console.log(response.result);
-//   }, function(reason) {
-//     console.log('Error: ' + reason.result.error.message);
+// probably don't need to use if we can make it work in the css framework
+// function displayBooks()
+// fetch("https://www.googleapis.com/books/v1/volumes/R5FhzgEACAAJ")
+//   .then(response => response.text())
+//   .then(data => {
+//     eval(data);
+//   })
+//   .catch(error => {
+//     console.error('Error loading Google Books API:', error);
 //   });
-// };
-// // 1. Load the JavaScript client library.
-// gapi.load('client', start);
-// </script>
 
-// for LOC API CALL
+// function initGoogleBooks() {
+//   google.books.load();
+// }
+
+// function initialize() {
+//   var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+//   viewer.load('ISBN:1234', alertNotFound);
+// };
+
+start();
+
+// for LOC API CALL maybe
 // // Const = "Year" (change year to input value)
 // fetch(`https://www.loc.gov/search/?q=books&fo=json&dates=${year}`)
 //   .then(response => response.json())
@@ -87,51 +122,3 @@ function getData (year) {
 //   console.log(data);
 //     )
 //     .catch(error => console.log(error));
-
-
-
-// const apiKey = "AIzaSyAg_vIE7Oue7sQBYZR4tScNEwAtvAJdFNg";
-// console.log(apiKey);
-
-// Google Books API call
-// sintax for the api call note saves app size
-// Option 2: Use gapi.client.request
-// A more general way to make requests is to use gapi.client.request. Your application does not have to load the Discovery Document as in the first option, but it must still set the API key (and auth for some APIs). While you need to manually fill in REST parameters with this option, it saves one network request and reduces application size.
-
-// <script src="https://apis.google.com/js/api.js"></script>
-// <script>
-// function start() {
-//   // 2. Initialize the JavaScript client library.
-//   gapi.client.init({
-//     'apiKey': 'YOUR_API_KEY',
-//     // clientId and scope are optional if auth is not required.
-//     'clientId': 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
-//     'scope': 'profile',
-//   }).then(function() {
-//     // 3. Initialize and make the API request.
-//     return gapi.client.request({
-//       'path': 'https://people.googleapis.com/v1/people/me?requestMask.includeField=person.names',
-//     })
-//   }).then(function(response) {
-//     console.log(response.result);
-//   }, function(reason) {
-//     console.log('Error: ' + reason.result.error.message);
-//   });
-// };
-// // 1. Load the JavaScript client library.
-// gapi.load('client', start);
-// </script>
-
-// for LOC API CALL
-// // Const = "Year" (change year to input value)
-// fetch(`https://www.loc.gov/search/?q=books&fo=json&dates=${year}`)
-//   .then(response => response.json())
-//   .then(data => {parse data in to our app}
-//   console.log(data);
-//     )
-//     .catch(error => console.log(error));
-
-
-
-
-
