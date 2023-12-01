@@ -5,62 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Years</title>
-    <!--<link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/reset.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 
 <body>
+    <Header class="banner hero-body">
+        <h1 class="title is-1 has-text-centered">Book Years</h1>
+        <p class="subtitle is-5 has-text-centered">Discover Books, Unleash Stories!</p>
+    </Header>
 
-    <h1 class="title">Book Years</h1>
 
-    <section id="search-container">
-
-        <div id="year">
-
-            <input id="yearSearch" type="text" name="year-search" placeholder="Search Year">
-            <button id="searchBtn-1">Search</button>
-            <!---some box elements will go here for the search boxes-->
-
+    <section id="body-container">
+        <div class="columns">
+            <div class="search-container">
+                <div class="column is-5">
+                    <div id="genre"class="py-4 mx-3">
+                        <input id="genreSearch" type="text" name="genre-search" placeholder="Search Genre" class="row is-full mr-3">
+                        <button class="button is-rounded is-normal is-hovered" id="searchBtn-1">Search</button>
+                        <!---some box elements will go here for the search boxes-->
+                    </div>
+            
+                    <div id="author-bio"class="py-4 mx-3">
+                        <!-- search box here too -->
+                        <input id="authorSearch" type="text" name="author-search" placeholder="Search Author" class="mr-3">
+                        <button class="button is-rounded is-normal is-hovered" id="searchBtn-2">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="result-container">
+                <div class=column is-7">
+                    <div id="results">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem voluptate earum nostrum, labore obcaecati repudiandae et veritatis facilis nobis incidunt accusantium aliquam id quod voluptates dolor expedita quis laboriosam optio!</p>
+                        <!-- this is where the results of the search will display-->
+                    </div>
+                </div>
+            </div>
 
         </div>
-
-        <div id="author-bio">
-
-            <!-- search box here too -->
-
-            <input id="authorSearch" type="text" name="author-search" placeholder="Search Author">
-            <button id="searchBtn-2">Search</button>
-
-        </div>
-
     </section>
 
-
-
-    <div id="results">
-
-        <ul id="yearResults">
-            <!-- this is where the results of the search will display-->
-
-        </ul>
-
-    </div>
-
-
-
-
-
-
-
-
-
     <footer>
-
-
         <!-- Footer if we want to add something here-->
-
     </footer>
-
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script
+      type="text/javascript"
+      src="https://www.google.com/books/jsapi.js"
+    ></script>
     <script src="script.js"></script>
 
 </body>
