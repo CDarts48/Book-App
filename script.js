@@ -9,16 +9,13 @@ var searchBtnEl2 = document.querySelector('#searchBtn-2');
 
 
 
-
-
-
 // starting the API call fuction 
 
 
 
 function getData (year) {
 
-   var apiUrl = 'https://www.loc.gov/search/?q=books&' + year + '&fo=json' 
+   var apiUrl = 'https://www.loc.gov/search/?q=books&&fo=json&at=results' 
 
     fetch(apiUrl) 
     .then(response => {
@@ -27,14 +24,16 @@ function getData (year) {
       .then(data => {
         console.log(data);
 
-        for (var i = 0; i < data.search.length; i++) {
+        for (var i = 0; i < data.results.length; i++) {
 
-            var yearList = document.createElement('li'); 
+            console.log(data.results[i].number_lccn); 
 
-            resultListEl.textContent = data.search[i];
-            resultListEl.appendChild(yearList); 
-             
-        }  
+            // var yearList = document.createElement('li'); 
+
+            // resultListEl.textContent = yearSearchEl.value; 
+            // resultsEl.appendChild(yearList); 
+              
+         }  
 
             
         });
