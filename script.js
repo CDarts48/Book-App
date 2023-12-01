@@ -9,69 +9,67 @@ var searchBtnE2 = document.querySelector("#searchBtn-2");
 
 // starting the API call function
 
-// function getApi () {
+function getData () {
 
-//   var requestedUrl = " ";
+  var apiUrl = 'https://www.loc.gov/search/?q=books&&fo=json&at=pulication.date&c=10' 
 
-//     fetch(requestedUrl) {
-//         .then(function(response) {
-//             return json.response();
-//         })
+   fetch(apiUrl) 
+   .then(response => {
+       return response.json();
+       })
+     .then(data => {
+       console.log(data);
 
-//         .then(function(data)) {
-//              console.log(data);
+       for (var i = 0; i < data.length; i++) {
 
-//         }
+           console.log(data[i]); 
 
-// loop over the data and create a list of books by author
+             
+        }  
 
-// for (var i = 0; i < data.length; i++) {
+           
+       });
+   }; 
 
-//     var bookList = document.createElement('td');
-//     var bookRow = document.createElement('tr');
-
-//     resutlsEl.appendChild(bookList);
-//     bookList.appendChild(bookRow);
-
-// }
-
-// getApi();
-
-//     }
-
-// }
+   getData(); 
+   
+   
+   // searchBtnEl1.addEventListener('click', function() {
+   //     var year = yearSearchEl.value;
+   //     getData(year);
+   // });
 
 // basic click event for the genre search
 
-function genreSearch() {
-  searchBtnEl.addEventListener("click", function () {
-    const bookGenre = genreSearchEl.value;
+// function genreSearch() {
+//   searchBtnEl.addEventListener("click", function () {
+//     const bookGenre = genreSearchEl.value;
 
-    if (bookGenre !== "") {
-      console.log(bookGenre);
-    } else {
-      return;
-    }
-  });
-}
+//     if (bookGenre !== "") {
+//       console.log(bookGenre);
+//     } else {
+//       return;
+//     }
+//   });
+// }
 
-genreSearch();
+// genreSearch();
 
 // basic click event for the year search
 
-function authorBio() {
-  searchBtnE2.addEventListener("click", function () {
-    const authBio = yearSearchEl.value;
+// function authorBio() {
+//   searchBtnE2.addEventListener("click", function () {
+//     const authBio = yearSearchEl.value;
 
-    if (authBio !== "") {
-      console.log(authBio);
-    } else {
-      return;
-    }
-  });
-}
+//     if (authBio !== "") {
+//       console.log(authBio);
+//     } else {
+//       return;
+//     }
+//   });
+// }
 
-authorBio();
+// authorBio();
 
 function start() {
   // fetch("https://www.googleapis.com/books/v1/volumes?q=huckleberry+finn+intitle") depends on whats on the back side of the +
