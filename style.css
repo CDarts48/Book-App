@@ -1,0 +1,33 @@
+:root {
+    --backclr: #F2F2F2;
+    --textclr: #0D0D0D;
+    --btnclr: #F2D377;
+    --btnhvr: #F2CD5E;
+    --txtboxclr: #dfdfdf; 
+}
+
+body {
+    background-color: var(--backclr);
+    font-size: 16px;
+    height: 100vh;
+}
+
+.button {
+    background-color: var(--btnhvr);
+    margin: 5%;
+}
+
+.result-container{
+    /* background-color: var(--txtboxclr); */
+}
+
+.button:hover {
+    background-color: var(--btnhvr);
+}
+
+#genreSearch, #authorSearch{
+    background-color: var(--txtboxclr);
+    padding: 1%;
+    margin: 5%;
+    border-radius: 15px;
+}
