@@ -13,7 +13,7 @@ var searchBtnEl2 = document.querySelector('#searchBtn-2');
 
 
 
-function getData (year) {
+function getData () {
 
    var apiUrl = 'https://www.loc.gov/search/?q=books&&fo=json&at=results' 
 
@@ -26,12 +26,8 @@ function getData (year) {
 
         for (var i = 0; i < data.results.length; i++) {
 
-            console.log(data.results[i].number_lccn); 
+            console.log(data.results[i]); 
 
-            // var yearList = document.createElement('li'); 
-
-            // resultListEl.textContent = yearSearchEl.value; 
-            // resultsEl.appendChild(yearList); 
               
          }  
 
@@ -39,10 +35,13 @@ function getData (year) {
         });
     }; 
 
-    searchBtnEl1.addEventListener('click', function() {
-        var year = yearSearchEl.value;
-        getData(year);
-    });
+    getData(); 
+    
+    
+    // searchBtnEl1.addEventListener('click', function() {
+    //     var year = yearSearchEl.value;
+    //     getData(year);
+    // });
 
 
 
