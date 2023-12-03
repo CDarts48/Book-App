@@ -71,48 +71,100 @@ function authorBio() {
   });
 }
 
-authorBio();
+function description(data) {
+  const descriptionEl = document.querySelector("#results p");
+
+  if (data.items && data.items.length > 0) {
+    const item = data.items[0];
+    if (item.volumeInfo.description) {
+      const description = item.volumeInfo.description;
+      descriptionEl.textContent = description;
+    } else {
+      descriptionEl.textContent = "Description Not Found";
+    }
+  } else {
+    descriptionEl.textContent = "No Results Found";
+  }
+}
+
+function authors(data) {
+  const authorsEl = document.querySelector(".authors");
+
+  if (data.volumeInfo.authors) {
+    const authors = data.volumeInfo.authors;
+    authorsEl.textContent = authors;
+  } else {
+    authorsEl.textContent = "Authors Not Found";
+  }
+}
+
+function previewLink(data) {
+  const previewLinkEl = document.querySelector(".preview-link");
+
+  if (data.volumeInfo.previewLink) {
+    const previewLink = data.volumeInfo.previewLink;
+    const title = data.volumeInfo.title;
+    previewLinkEl.innerHTML = `<a href="${previewLink}" target="_blank">${title}</a>`;
+  } else {
+    previewLinkEl.textContent = "Preview Link Not Found";
+  }
+}
+
+function foo(bookObject) {
+  localStorage.setItem("bookObject", JSON.stringify(bookObject));
+  start();
+}
+fetch(`https://www.loc.gov/books/?q=books&fo=json&date=${2022}`)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    const results = data.results;
+    console.log(results); // Check the value of 'results'
+    // const books = results.filter(result => result.type && result.type.includes('book'));
+    foo(results[20]);
+    console.log(books);
+  })
+  .catch(function (error) {
+    console.log("Error: " + error.message);
+
+    const books2022 = books.filter((result) => result.date === "2022");
+    const randomBooks = [];
+    for (let i = 0; i < 100; i++) {
+      const randomBookIndex = Math.floor(Math.random() * books2022.length);
+      randomBooks.push(books2022[randomBookIndex]);
+    }
+    console.log(randomBooks);
+  })
+  .catch(function (error) {
+    console.log("Error: " + error.message);
+  });
 
 function start() {
-  // fetch("https://www.googleapis.com/books/v1/volumes?q=huckleberry+finn+intitle") depends on whats on the back side of the +
-  fetch("https://www.googleapis.com/books/v1/volumes/R5FhzgEACAAJ")
-    // the R5FhzgEACAAJ was taken from the google books
+  const bookObject = JSON.parse(localStorage.getItem("bookObject"));
+  console.log("bookObject.title", bookObject.title);
+  const title = bookObject.title.replace(/ /g, "%20");
+  console.log(
+    `url: https://www.googleapis.com/books/v1/volumes?q=${title}&projection=lite`
+  );
 
-    // need to get isbn from localstorage/LOC  fetch('https://www.googleapis.com/books/v1/volumes/?q=isbn${isbn}');
-    .then(function (response) {
-      console.log(response);
-      return response.json();
+  fetch(
+    `https://www.googleapis.com/books/v1/volumes?q=${title}&projection=lite`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("data", data);
+      authors(data);
+      description(data);
+      previewLink(data);
     })
-    .then(function (data) {
-      console.log(data.volumeInfo.description);
-    })
-
     .catch(function (error) {
       console.log("Error: " + error.message);
     });
 }
 
-// probably don't need to use if we can make it work in the css framework
-// function displayBooks()
-// fetch("https://www.googleapis.com/books/v1/volumes/R5FhzgEACAAJ")
-//   .then(response => response.text())
-//   .then(data => {
-//     eval(data);
-//   })
-//   .catch(error => {
-//     console.error('Error loading Google Books API:', error);
-//   });
-
-// function initGoogleBooks() {
-//   google.books.load();
-// }
-
-// function initialize() {
-//   var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-//   viewer.load('ISBN:1234', alertNotFound);
-// };
-
-start();
+// used learning assistant to develope lines 97-128
+// start();
 
 // for LOC API CALL maybe
 // // Const = "Year" (change year to input value)
