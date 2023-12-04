@@ -9,35 +9,41 @@ var searchBtnE2 = document.querySelector("#searchBtn-2");
 
 // starting the API call function
 
-function getData () {
+function getData(title) {
 
-  var apiUrl = 'https://www.loc.gov/search/?q=books&&fo=json&at=pulication.date&c=10' 
+  var apiUrl = 'https://openlibrary.org/search.json?title=' + title + '&limit=1'
+  fetch(apiUrl)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
 
-   fetch(apiUrl) 
-   .then(response => {
-       return response.json();
-       })
-     .then(data => {
-       console.log(data);
 
-       for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.docs.length; i++) {
+        console.log(data.docs[i]);
 
-           console.log(data[i]); 
+        var genreResults = document.createElement('p');
+        genreResults.textContent = genreSearchEl.value;
+        resutlsEl.appendChild(genreResults);
 
-             
-        }  
+        if (!data.docs || data.docs.length === 0) {
+          genreSearchEl.textContent = "No Results Found";
+          return;
+        }
 
-           
-       });
-   }; 
 
-   getData(); 
-   
-   
-   // searchBtnEl1.addEventListener('click', function() {
-   //     var year = yearSearchEl.value;
-   //     getData(year);
-   // });
+      }
+
+
+    });
+};
+
+
+searchBtnEl.addEventListener('click', function () {
+  var title = genreSearchEl.value;
+  getData(title);
+});
 
 // basic click event for the genre search
 
