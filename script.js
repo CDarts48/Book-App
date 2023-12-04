@@ -5,6 +5,7 @@ var yearEl = document.querySelector("#author-bio");
 var resutlsEl = document.querySelector("#results");
 var searchBtnEl = document.querySelector("#searchBtn-1");
 var searchBtnE2 = document.querySelector("#searchBtn-2");
+
 // var for the google book embedded viewer
 
 // starting the API call function
@@ -112,13 +113,33 @@ function start() {
 //   viewer.load('ISBN:1234', alertNotFound);
 // };
 
-start();
+function foo(bookObject) {
+  localStorage.setItem("bookObject", JSON.stringify(bookObject));
+  start();
+}
+fetch("https://www.loc.gov/books/?q=books&fo=json&date=${2022}")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    const results = data.results;
+    console.log(results); // Check the value of 'results'
+    // const books = results.filter(result => result.type && result.type.includes('book'));
+    foo(results[20]);
+    console.log(books);
+  })
+  .catch(function (error) {
+    console.log("Error: " + error.message);
+    const books2022 = books.filter((result) => result.date === "2022");
+    const randomBooks = [];
+    for (let i = 0; i < 100; i++) {
+      const randomBookIndex = Math.floor(Math.random() * books2022.length);
+      randomBooks.push(books2022[randomBookIndex]);
+    }
+    console.log(randomBooks);
+  })
+  .catch(function (error) {
+    console.log("Error: " + error.message);
+});
 
-// for LOC API CALL maybe
-// // Const = "Year" (change year to input value)
-// fetch(`https://www.loc.gov/search/?q=books&fo=json&dates=${year}`)
-//   .then(response => response.json())
-//   .then(data => {parse data in to our app}
-//   console.log(data);
-//     )
-//     .catch(error => console.log(error));
+start();
