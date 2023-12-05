@@ -1,5 +1,5 @@
 # Book-App
-<<<<<<< jbatcheller32-patch-1
+
 # Book-App Description
 
 Our desktop book app is designed to allow users to search the title of any book and get the book description, author, and a link to Google Books to preview the book. This app uses the Google Books API for the description, author, and Google Book link. Then uses the Open Library API for the titles. For styling, we used a CSS framework called CSS Reset to create a polished UI. 
@@ -23,4 +23,3 @@ Live App link: https://cdarts48.github.io/Book-App/
 
 =======
 # Book-App
->>>>>>> main
