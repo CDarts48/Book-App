@@ -61,6 +61,7 @@ function authors(data) {
 
 function previewLink(data) {
   const bookLink = document.querySelector("#book-info");
+  bookLink.innerHTML = "";
   if (data.items) {
     const preview = data.items[0].volumeInfo.previewLink;
     const link = document.createElement('a');
