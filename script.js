@@ -5,41 +5,6 @@ var yearEl = document.querySelector("#author-bio");
 var resutlsEl = document.querySelector("#results");
 var searchBtnEl = document.querySelector("#searchBtn-1");
 var searchBtnE2 = document.querySelector("#searchBtn-2");
-// var for the google book embedded viewer
-
-// starting the API call function
-
-// function getApi () {
-
-//   var requestedUrl = " ";
-
-//     fetch(requestedUrl) {
-//         .then(function(response) {
-//             return json.response();
-//         })
-
-//         .then(function(data)) {
-//              console.log(data);
-
-//         }
-
-// loop over the data and create a list of books by author
-
-// for (var i = 0; i < data.length; i++) {
-
-//     var bookList = document.createElement('td');
-//     var bookRow = document.createElement('tr');
-
-//     resutlsEl.appendChild(bookList);
-//     bookList.appendChild(bookRow);
-
-// }
-
-// getApi();
-
-//     }
-
-// }
 
 // basic click event for the genre search
 
@@ -72,26 +37,22 @@ function authorBio() {
 }
 
 function description(data) {
-  const descriptionEl = document.querySelector("#results p");
+  const descriptionEl = document.querySelector("#rsltcont");
 
-  if (data.items && data.items.length > 0) {
-    const item = data.items[0];
-    if (item.volumeInfo.description) {
-      const description = item.volumeInfo.description;
-      descriptionEl.textContent = description;
-    } else {
-      descriptionEl.textContent = "Description Not Found";
-    }
+  if (data.items) {
+    const des = data.items[0].searchInfo.textSnippet;
+    descriptionEl.textContent = des;
   } else {
-    descriptionEl.textContent = "No Results Found";
+    descriptionEl.textContent = "Description Not Found";
   }
 }
 
 function authors(data) {
-  const authorsEl = document.querySelector(".authors");
+  // data.items[0].volumeInfo.authors[0]
+  const authorsEl = document.querySelector("#authors");
 
-  if (data.volumeInfo.authors) {
-    const authors = data.volumeInfo.authors;
+  if (data.items[0].volumeInfo.authors) {
+    const authors = data.items[0].volumeInfo.authors[0];
     authorsEl.textContent = authors;
   } else {
     authorsEl.textContent = "Authors Not Found";
@@ -99,58 +60,34 @@ function authors(data) {
 }
 
 function previewLink(data) {
-  const previewLinkEl = document.querySelector(".preview-link");
-
-  if (data.volumeInfo.previewLink) {
-    const previewLink = data.volumeInfo.previewLink;
-    const title = data.volumeInfo.title;
-    previewLinkEl.innerHTML = `<a href="${previewLink}" target="_blank">${title}</a>`;
+  const previewLinkEl = document.querySelector("#book-info");
+  if (data.items) {
+    const preview = data.items[0].selfLink;
+    previewLinkEl.textContent = preview;
   } else {
-    previewLinkEl.textContent = "Preview Link Not Found";
+    previewLinkEl.textContent = "Description Not Found";
   }
 }
 
-function foo(bookObject) {
-  localStorage.setItem("bookObject", JSON.stringify(bookObject));
-  start();
+function getData(title) {
+  var apiUrl = "https://openlibrary.org/search.json?q=" + title + "&limit=1";
+  fetch(apiUrl)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      start(data.docs[0].title);
+    });
 }
-fetch(`https://www.loc.gov/books/?q=books&fo=json&date=${2022}`)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    const results = data.results;
-    console.log(results); // Check the value of 'results'
-    // const books = results.filter(result => result.type && result.type.includes('book'));
-    foo(results[20]);
-    console.log(books);
-  })
-  .catch(function (error) {
-    console.log("Error: " + error.message);
 
-    const books2022 = books.filter((result) => result.date === "2022");
-    const randomBooks = [];
-    for (let i = 0; i < 100; i++) {
-      const randomBookIndex = Math.floor(Math.random() * books2022.length);
-      randomBooks.push(books2022[randomBookIndex]);
-    }
-    console.log(randomBooks);
-  })
-  .catch(function (error) {
-    console.log("Error: " + error.message);
-  });
+searchBtnEl.addEventListener("click", function () {
+  var title = genreSearchEl.value;
+  getData(title);
+});
 
-function start() {
-  const bookObject = JSON.parse(localStorage.getItem("bookObject"));
-  console.log("bookObject.title", bookObject.title);
-  const title = bookObject.title.replace(/ /g, "%20");
-  console.log(
-    `url: https://www.googleapis.com/books/v1/volumes?q=${title}&projection=lite`
-  );
-
-  fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${title}&projection=lite`
-  )
+function start(title) {
+  fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
     .then((response) => response.json())
     .then((data) => {
       console.log("data", data);
@@ -162,15 +99,3 @@ function start() {
       console.log("Error: " + error.message);
     });
 }
-
-// used learning assistant to develope lines 97-128
-// start();
-
-// for LOC API CALL maybe
-// // Const = "Year" (change year to input value)
-// fetch(`https://www.loc.gov/search/?q=books&fo=json&dates=${year}`)
-//   .then(response => response.json())
-//   .then(data => {parse data in to our app}
-//   console.log(data);
-//     )
-//     .catch(error => console.log(error));
