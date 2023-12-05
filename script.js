@@ -1,5 +1,5 @@
-var genreEl = document.querySelector("#genre");
-var genreSearchEl = document.querySelector("#genreSearch");
+var titleEl = document.querySelector("#title");
+var titleSearchEl = document.querySelector("#titleSearch");
 var yearSearchEl = document.querySelector("#authorSearch");
 var yearEl = document.querySelector("#author-bio");
 var resutlsEl = document.querySelector("#results");
@@ -8,9 +8,9 @@ var searchBtnE2 = document.querySelector("#searchBtn-2");
 
 // basic click event for the genre search
 
-function genreSearch() {
+function titleSearch() {
   searchBtnEl.addEventListener("click", function () {
-    const bookGenre = genreSearchEl.value;
+    const bookGenre = titleSearchEl.value;
 
     if (bookGenre !== "") {
       console.log(bookGenre);
@@ -20,7 +20,7 @@ function genreSearch() {
   });
 }
 
-genreSearch();
+titleSearch();
 
 // basic click event for the year search
 
@@ -41,7 +41,7 @@ function description(data) {
 
   if (data.items) {
     const des = data.items[0].searchInfo.textSnippet;
-    descriptionEl.textContent = des;
+    descriptionEl.textContent = "Book Description: " + des;
   } else {
     descriptionEl.textContent = "Description Not Found";
   }
@@ -53,19 +53,22 @@ function authors(data) {
 
   if (data.items[0].volumeInfo.authors) {
     const authors = data.items[0].volumeInfo.authors[0];
-    authorsEl.textContent = authors;
+    authorsEl.textContent = "Author(s): " + authors;
   } else {
     authorsEl.textContent = "Authors Not Found";
   }
 }
 
 function previewLink(data) {
-  const previewLinkEl = document.querySelector("#book-info");
+  const bookLink = document.querySelector("#book-info");
   if (data.items) {
-    const preview = data.items[0].selfLink;
-    previewLinkEl.textContent = preview;
+    const preview = data.items[0].volumeInfo.previewLink;
+    const link = document.createElement('a');
+    link.href = preview;
+    link.textContent = "View Preview";
+    bookLink.appendChild(link)
   } else {
-    previewLinkEl.textContent = "Description Not Found";
+    bookLink.textContent = "Description Not Found";
   }
 }
 
@@ -77,12 +80,13 @@ function getData(title) {
     })
     .then((data) => {
       console.log(data);
+      localStorage.setItem('Title', title);
       start(data.docs[0].title);
     });
 }
 
 searchBtnEl.addEventListener("click", function () {
-  var title = genreSearchEl.value;
+  var title = titleSearchEl.value;
   getData(title);
 });
 

@@ -33,7 +33,7 @@ body {
 
 }
 
-#genreSearch, #authorSearch, #yearSearch, #isbnNumber {
+#titleSearch {
     background-color: var(--txtboxclr);
     padding: 1%;
     margin: 5%;
@@ -41,7 +41,7 @@ body {
     text-align: center;
 }
 
-#genreSearch:hover, #authorSearch:hover, #yearSearch:hover, #isbnNumber:hover {
+#titleSearch:hover {
     transform: scale(1.05);
     box-shadow: 4px 3px 4px 0px black;
 }
@@ -60,4 +60,19 @@ body {
 .book p {
     padding: 1%;
     font-size: 16px;
+}
+
+#authors {
+    font-size: 30px;
+    padding: 1%;
+}
+
+#rsltcont {
+    font-size: 20px;
+    padding: 1%;
+}
+
+#book-info {
+    font-size: 16px;
+    padding: 1%;
 }
